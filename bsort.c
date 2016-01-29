@@ -14,17 +14,17 @@ static void _swap (void * a, void * b, int size)
 
 void bsort (void * array, int len, int size, int (*compare) (const void * a, const void * b))
 {
-	int comparison = 0;
+	//~ int comparison = 0;
 	int index = 0;
 	do 
 	{
-		char * a = array;
-		char * b = array;
-		a += (index * size);
-		b = a + size;
+		char * a = (char *) array + index * size;
+		char * b = a + size;
+		//~ a += (index * size);
+		//~ b = a + size;
 //		printf ("a %d, b %d\n", *(int*) a, *(int*) b);
 		
-		comparison = compare (a, b);
+		int comparison = compare (a, b);
 		if (comparison > 0)
 		{
 //			printf ("swap %d %d\n", *(int*) a, *(int*) b);
@@ -44,7 +44,12 @@ int compare_int (const void * a, const void * b)
 	return (*(const int*) a - *(const int*) b);	
 }
 
-void _display (const int * data, int len)
+int compare_double (const void * a, const void * b)
+{
+	return (*(const double*) a - *(const double*) b);	
+}
+
+static void _display_int (const int * data, int len)
 {
 	int i;
 	for (i = 0; i < len; i++)
@@ -52,16 +57,25 @@ void _display (const int * data, int len)
 	printf ("\n");
 }
 
+static void _display_double (const double * data, int len)
+{
+	int i;
+	for (i = 0; i < len; i++)
+		printf ("%lf ", data[i]);
+	printf ("\n");
+}
+
 int main (void)
 {
-	int data [] = { 6, 2, 1, 3, 5, 4 };
+	// data [] = { 6, 2, 1, 3, 5, 4 };
+	double data [] = { 0, 10.0, 3.8, -5.9, 1.1, -4, -200 };
 	int dataLength = sizeof (data) / sizeof (data[0]);
 	
-	_display (data, dataLength);
+	_display_double (data, dataLength);
 	
-	bsort (data, dataLength, sizeof (data[0]), compare_int);
+	bsort (data, dataLength, sizeof (data[0]), compare_double);
 	
-	_display (data, dataLength);
+	_display_double (data, dataLength);
 	
 	return 0;
 }
