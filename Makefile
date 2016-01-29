@@ -1,13 +1,15 @@
 
-BINARIES= main
+BINARIES= main bsort bsort++
 
-OBJECTS= main.o
+OBJECTS= main.o bsort.o bsort++.o
 
 
 CFLAGS+=-Wall
-CXXFLAGS+=-Wall
+CXXFLAGS+=-Wall -std=c++11
 
-all: main
+CXXLIBS=-lstdc++
+
+all: main bsort bsort++
 
 
 main: main.o
@@ -16,5 +18,8 @@ main: main.o
 bsort: bsort.o
 	${CC} -o bsort bsort.o
 
+bsort++: bsort++.o
+	${CC} -o bsort++ bsort++.o ${CXXLIBS}
+
 clean:
-	rm -f *.o $(BINARIES)
+	rm -f $(OBJECTS) $(BINARIES)
