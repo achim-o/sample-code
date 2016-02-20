@@ -6,11 +6,38 @@
  * n: Grad des Polynoms (höchste vorkommende Potenz)
  * a: Vektor der Koeffizienten. Die Länge ist um 1 größer als der Grad!
  */
-double horner (double x, int n, double * a)
+
+double horner_r (double x, int n, double * a)
 {
 	double y = 0;
+	
+	/* rekursive Implementation */
+	if (n == 0)
+	{
+		y = 1;
+//		printf ("n = %d | y = %lf\n", n, y);
+	}
+	else
+	{
+		y = x * horner_r (x, n-1, a+1) + a[0];
+//		printf ("n = %d | y = %lf * horner (%lf, %d, a) + %lf = %lf\n", n, x, x, n-1, a[0], y);
+	}	
 	return y;
 }
+
+double horner_i (double x, int n, double * a)
+{
+	double y = 0;
+	/* iterative Implementierung */ 
+	
+	return y;
+}
+
+/* Auswahl der Implementierung: Rekursiv oder iterativ */
+#define horner horner_r
+/*
+#define horner horner_i
+*/
 
 int main (void)
 {
@@ -26,7 +53,7 @@ int main (void)
 	
 	/* Wertetabelle, x = 0 .. 9 */
 	int i;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 15; i++)
 	{
 		/* Funktion horner aufrufen und Ergebnis speichern */
 		double x = i;
